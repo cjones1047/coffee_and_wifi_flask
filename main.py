@@ -62,7 +62,10 @@ def home():
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():
-        print("True")
+        with open('cafe-data.csv', 'a') as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerow([form.cafe.data, form.cafe_location_url.data, form.open_time.data, form.closing_time.data,
+                             form.coffee_rating.data, form.wifi_rating.data, form.power_outlet_rating.data])
 
         return redirect(url_for('cafes'))
     return render_template('add.html', form=form)
